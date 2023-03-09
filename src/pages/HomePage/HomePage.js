@@ -1,28 +1,34 @@
+import { useEffect, useState } from "react"
 import styled from "styled-components"
+import axios from "axios";
+import loading from "../../assets/ATB3o.gif"
+import Poster from "../../components/Poster"
 
 export default function HomePage() {
+   
+   const [movie, setMovie] = useState([])
+
+   useEffect(() => {
+        const promisse = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
+
+        promisse.then(resposta => {
+            setMovie(resposta.data)
+        })
+        promisse.catch(erro => {
+            alert("Erro no servidor! Por favor aguarde!")
+        })
+    }, [])
+
+    if(movie.length === 0){
+        return <LoadingImg src={loading} />
+    }
+   
     return (
         <PageContainer>
             Selecione o filme
-
-            <ListContainer>
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+            <ListContainer >
+               {movie.map(m => <Poster  key={m.id} id={m.id} posterURL={m.posterURL} />)}
             </ListContainer>
-
         </PageContainer>
     )
 }
@@ -58,4 +64,12 @@ const MovieContainer = styled.div`
         width: 130px;
         height: 190px;
     }
+`
+
+const LoadingImg = styled.img `
+    width: 60%;
+    display: block;
+    margin: auto;
+
+    margin-top: 200px;
 `
