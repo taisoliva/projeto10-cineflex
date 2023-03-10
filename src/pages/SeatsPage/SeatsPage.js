@@ -37,19 +37,16 @@ export default function SeatsPage({ nameMovie, imgMovie,
         event.preventDefault();
 
 
-        if(seatsSelect.length === 0){
+        /* if(seatsSelect.length === 0){
             alert("Você precisa escolher pelo menos um assento!")
             return;
-        }
+        } */
 
         let object = {
             ids: seatsSelect,
             name: name,
             cpf: cpf
         }
-
-        console.log(object)
-        
         
         const requisicao = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", object) 
         requisicao.then(() => navigate("/sucesso"))
