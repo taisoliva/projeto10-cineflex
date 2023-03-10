@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 import Seat from "../../components/Seat"
@@ -16,6 +16,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
     const [seats, setSeats] = useState([])
     const [weekDay, setWeekDay] = useState("")
 
+    const navigate = useNavigate()  
 
     console.log(idSessao)
 
@@ -32,7 +33,28 @@ export default function SeatsPage({ nameMovie, imgMovie,
         })
     }, [])
 
-    console.log(seats)
+    function confirmarSessao (event){
+        event.preventDefault();
+
+
+        if(seatsSelect.length === 0){
+            alert("Você precisa escolher pelo menos um assento!")
+            return;
+        }
+
+        let object = {
+            ids: seatsSelect,
+            name: name,
+            cpf: cpf
+        }
+
+        console.log(object)
+        
+        
+        const requisicao = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", object) 
+        requisicao.then(() => navigate("/sucesso"))
+
+    }
 
     return (
         <PageContainer>
@@ -60,7 +82,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
             </CaptionContainer>
 
 
-            <form>
+            <form onSubmit={confirmarSessao}>
                 <FormContainer>
                     Nome do Comprador:
                     <input placeholder="Digite seu nome..."
@@ -74,9 +96,10 @@ export default function SeatsPage({ nameMovie, imgMovie,
                     <input placeholder="Digite seu CPF..."
                         value={cpf}
                         onChange={(event) => setCPF(event.target.value)} 
-                        required/>
+                        required
+                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
 
-                    <button>Reservar Assento(s)</button>
+                    <button type="submit">Reservar Assento(s)</button>
                 </FormContainer>
             </form>
 
