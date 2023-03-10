@@ -46,7 +46,7 @@ export default function SessionsPage({nameMovie, setNameMovie, imgMovie, setImgM
                 )}
             </div>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={imgMovie} alt="poster" />
                 </div>

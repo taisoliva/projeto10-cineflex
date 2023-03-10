@@ -85,7 +85,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
             <form onSubmit={confirmarSessao}>
                 <FormContainer>
                     Nome do Comprador:
-                    <input placeholder="Digite seu nome..."
+                    <input data-test="client-name" placeholder="Digite seu nome..."
                         value={name}
                         onChange={(event) => setName(event.target.value)} 
                         required/>
@@ -93,17 +93,17 @@ export default function SeatsPage({ nameMovie, imgMovie,
 
 
                     CPF do Comprador:
-                    <input placeholder="Digite seu CPF..."
+                    <input data-test="client-cpf" placeholder="Digite seu CPF..."
                         value={cpf}
                         onChange={(event) => setCPF(event.target.value)} 
                         required
                         pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
 
-                    <button type="submit">Reservar Assento(s)</button>
+                    <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
                 </FormContainer>
             </form>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={imgMovie} alt="poster" />
                 </div>

@@ -29,7 +29,7 @@ export default function Seat ({id,number, available, seatsSelect ,select}){
 
     return (
     
-        <SeatItem  onClick={() => select(id, available, number)} corBack={() => background(id)} 
+        <SeatItem  data-test="seat" onClick={() => select(id, available, number)} corBack={() => background(id)} 
                     corBorder={() => border(id)}> {number} </SeatItem>
     )
 }
