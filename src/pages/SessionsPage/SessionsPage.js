@@ -6,13 +6,11 @@ import loading from "../../assets/ATB3o.gif"
 import Session from "../../components/Session"
 
 
-export default function SessionsPage() {
+export default function SessionsPage({nameMovie, setNameMovie, imgMovie, setImgMovie}) {
 
     const { idFilme } = useParams()
     const [days, setDays] = useState([])
-    const [nameMovie,setNameMovie] = useState("")
-    const [imgMovie,setImgMovie] = useState("")
-
+    
 
 
     useEffect(() => {

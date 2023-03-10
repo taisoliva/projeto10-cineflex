@@ -1,51 +1,92 @@
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
+import axios from "axios"
+import Seat from "../../components/Seat"
+import CaptionItem from "../../components/CaptionItem"
 
-export default function SeatsPage() {
+export default function SeatsPage({ nameMovie, imgMovie,
+    day, setDay,
+    time, setTime,
+    seatsSelect, select,
+    name, setName,
+    cpf, setCPF }) {
+
+    const { idSessao } = useParams()
+    const [seats, setSeats] = useState([])
+    const [weekDay, setWeekDay] = useState("")
+
+
+    console.log(idSessao)
+
+    useEffect(() => {
+
+        const promisse = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
+
+        promisse.then((resposta) => {
+            console.log(resposta.data)
+            setDay(resposta.data.day.date)
+            setTime(resposta.data.name)
+            setWeekDay(resposta.data.day.weekday)
+            setSeats(resposta.data.seats)
+        })
+    }, [])
+
+    console.log(seats)
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                {seats.map(seat => <Seat key={seat.id}
+                    id={seat.id}
+                    number={seat.name}
+                    available={seat.isAvailable}
+                    seatsSelect={seatsSelect}
+                    select={select} />)}
             </SeatsContainer>
 
             <CaptionContainer>
-                <CaptionItem>
-                    <CaptionCircle />
+                <CaptionItem cor={"#1AAE9E"} border={"#0E7D71"}>
                     Selecionado
                 </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
+                <CaptionItem cor={"#C3CFD9"} border={"#7B8B99"}>
                     Disponível
                 </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
+                <CaptionItem cor={"#FBE192"} border={"#F7C52B"}>
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
 
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+            <form>
+                <FormContainer>
+                    Nome do Comprador:
+                    <input placeholder="Digite seu nome..."
+                        value={name}
+                        onChange={(event) => setName(event.target.value)} 
+                        required/>
 
-                <button>Reservar Assento(s)</button>
-            </FormContainer>
+
+
+                    CPF do Comprador:
+                    <input placeholder="Digite seu CPF..."
+                        value={cpf}
+                        onChange={(event) => setCPF(event.target.value)} 
+                        required/>
+
+                    <button>Reservar Assento(s)</button>
+                </FormContainer>
+            </form>
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={imgMovie} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{nameMovie}</p>
+                    <p>{weekDay} - {time}</p>
                 </div>
             </FooterContainer>
 
@@ -95,36 +136,8 @@ const CaptionContainer = styled.div`
     justify-content: space-between;
     margin: 20px;
 `
-const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
-const CaptionItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
+
+
 const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
