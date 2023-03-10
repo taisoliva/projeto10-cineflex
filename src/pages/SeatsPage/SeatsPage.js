@@ -16,7 +16,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
     const [seats, setSeats] = useState([])
     const [weekDay, setWeekDay] = useState("")
 
-    const navigate = useNavigate()  
+    const navigate = useNavigate()
 
     console.log(idSessao)
 
@@ -33,23 +33,23 @@ export default function SeatsPage({ nameMovie, imgMovie,
         })
     }, [])
 
-    function confirmarSessao (event){
+    function confirmarSessao(event) {
         event.preventDefault();
 
 
-        /* if(seatsSelect.length === 0){
+        if (seatsSelect.length === 0) {
             alert("Você precisa escolher pelo menos um assento!")
             return;
-        } */
+        }
 
         let object = {
             ids: seatsSelect,
             name: name,
             cpf: cpf
         }
-        
-        const requisicao = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", object) 
-        requisicao.then(() => navigate("/sucesso"))
+
+        const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", object)
+        promisse.then(() => navigate("/sucesso"))
 
     }
 
@@ -79,26 +79,28 @@ export default function SeatsPage({ nameMovie, imgMovie,
             </CaptionContainer>
 
 
-            <form onSubmit={confirmarSessao}>
-                <FormContainer>
+
+            <FormContainer>
+                <form onSubmit={confirmarSessao}>
                     Nome do Comprador:
                     <input data-test="client-name" placeholder="Digite seu nome..."
                         value={name}
-                        onChange={(event) => setName(event.target.value)} 
-                        required/>
+                        onChange={(event) => setName(event.target.value)}
+                        required />
 
 
 
                     CPF do Comprador:
                     <input data-test="client-cpf" placeholder="Digite seu CPF..."
                         value={cpf}
-                        onChange={(event) => setCPF(event.target.value)} 
+                        onChange={(event) => setCPF(event.target.value)}
                         required
                         pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
 
                     <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
-                </FormContainer>
-            </form>
+                </form>
+            </FormContainer>
+
 
             <FooterContainer data-test="footer">
                 <div>
@@ -110,7 +112,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
                 </div>
             </FooterContainer>
 
-        </PageContainer>
+        </PageContainer >
     )
 }
 
