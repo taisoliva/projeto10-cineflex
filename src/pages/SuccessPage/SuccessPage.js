@@ -17,7 +17,7 @@ export default function SuccessPage({nameMovie, day, time, numberSeat, name, cpf
 
             <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
-                {numberSeat.map( number => <p> Assento {number} </p>)}
+                {numberSeat.length !== 0 && numberSeat.map( number => <p> Assento {number} </p>)}
             </TextContainer>
 
             <TextContainer data-test="client-info">

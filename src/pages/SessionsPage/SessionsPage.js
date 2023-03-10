@@ -12,7 +12,7 @@ export default function SessionsPage({nameMovie, setNameMovie, imgMovie, setImgM
     const [days, setDays] = useState([])
     
 
-
+    
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
 
@@ -25,19 +25,20 @@ export default function SessionsPage({nameMovie, setNameMovie, imgMovie, setImgM
 
         promisse.catch(<LoadingImg src={loading} />)
 
-    }, [])
+    }, [idFilme, setNameMovie, setImgMovie])
 
 
     if (days.length === 0) {
         return <LoadingImg src={loading} />
     }
 
+    console.log(days.length)
 
     return (
         <PageContainer>
             Selecione o horário
             <div>
-                {days.map((day) => 
+                { days && days.map((day) => 
                     <Session key={day.id}
                         idDay={day.id}
                         weekDay={day.weekday}

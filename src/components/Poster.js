@@ -27,3 +27,4 @@ const MovieContainer = styled.div`
     }
 
 `
+

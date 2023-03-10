@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Navigate, useNavigate, useParams } from "react-router-dom"
+import {useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 import Seat from "../../components/Seat"
@@ -42,7 +42,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
             return;
         }
 
-        let object = {
+        const object = {
             ids: seatsSelect,
             name: name,
             cpf: cpf

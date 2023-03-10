@@ -4,13 +4,11 @@ import styled from "styled-components"
 
 export default function Session({ idDay, weekDay, date, showtimes }) {
 
-    console.log(showtimes)
-
     return (
         <SessionContainer data-test="movie-day">
             {weekDay} - {date}
             <ButtonsContainer key={idDay}>
-                {showtimes.map(time => <Link to={`/assentos/${time.id}`}> 
+                { showtimes.map(time => <Link to={`/assentos/${time.id}`}> 
                                             <button data-test="showtime"> {time.name} </button>
                                         </Link> )}
             </ButtonsContainer>
