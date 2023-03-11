@@ -95,7 +95,7 @@ export default function SeatsPage({ nameMovie, imgMovie,
                         value={cpf}
                         onChange={(event) => setCPF(event.target.value)}
                         required
-                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
+                        /* pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" */ />
 
                     <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
                 </form>
